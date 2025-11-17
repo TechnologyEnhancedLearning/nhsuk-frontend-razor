@@ -1,0 +1,19 @@
+@using NHSUKFrontendRazor.ViewModels
+@model ButtonViewModel
+
+@{
+	var isLink = !String.IsNullOrWhiteSpace(Model.AspController);
+	var tagType = isLink ? "a" : "button";
+	var canSubmit = isLink ? "role=\"button\"" : "type =\"submit\"";
+	var undecorate = isLink ? "text-decoration: none;" : "";
+	var url = Url.Action(Model.AspAction, Model.AspController, Model.AspRouteData);
+	var href = isLink ? $"href=\"{url}\"" : "";
+	var preventDoubleClick = @Model.PreventDoubleClick ? "data-prevent-double-click=true" : "";
+
+	var buttonOpening = $"<{tagType} class=\"{Model.Styling}\" data-module=\"nhsuk-button\" {href} {preventDoubleClick} {canSubmit} style=\"{undecorate}{Model.Style}\">";
+	var buttonClosing = $"</{tagType}>";
+}
+
+@Html.Raw(buttonOpening)
+	@Model.Text
+@Html.Raw(buttonClosing)
