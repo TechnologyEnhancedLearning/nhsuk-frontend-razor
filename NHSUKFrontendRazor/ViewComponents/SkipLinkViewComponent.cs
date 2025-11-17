@@ -1,6 +1,5 @@
 namespace NHSUKFrontendRazor.ViewComponents
 {
-    using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
     using NHSUKFrontendRazor.ViewModels;
 
@@ -10,10 +9,10 @@ namespace NHSUKFrontendRazor.ViewComponents
     public class SkipLinkViewComponent : ViewComponent
     {
         public IViewComponentResult Invoke(
-            string maincContentID,
+            string mainContentID,
             string text = "Skip to main content")
         {
-            var model = new SkipLinkViewModel(maincContentID, text);
+            var model = new SkipLinkViewModel(mainContentID, text);
 
             return View(model);
         }
