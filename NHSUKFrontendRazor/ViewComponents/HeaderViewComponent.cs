@@ -4,7 +4,8 @@ namespace NHSUKFrontendRazor.ViewComponents
     using NHSUKFrontendRazor.ViewModels;
 
     /// <summary>
-    /// A ViewComponent that renders a Header.
+    /// A ViewComponent that renders the NHS header, which provides consistent branding, navigation, search, and account management links.
+    /// The header is a key part of the NHS.UK frontend design system.
     /// </summary>
     public class HeaderViewComponent : ViewComponent
     {
