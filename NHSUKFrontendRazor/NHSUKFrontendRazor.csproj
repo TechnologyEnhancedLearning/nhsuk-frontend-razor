@@ -14,6 +14,14 @@
     <SupportedPlatform Include="browser" />
   </ItemGroup>
 
+  
+  <ItemGroup>
+    <None Include="Css\Shared\Components\*" Pack="true" PackagePath="wwwroot\css\shared\components\"></None>
+    <None Include="Views\Shared\**\*.*" Pack="true" PackagePath="Views\Shared"></None>
+    <None Include="build\NHSUKViewComponents.Web.props" Pack="true" PackagePath="build"></None>
+  </ItemGroup>
+
+  
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.3.0" />
