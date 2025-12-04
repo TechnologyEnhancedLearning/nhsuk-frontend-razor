@@ -8,7 +8,7 @@
     <ol class="nhsuk-breadcrumb__list">
         @foreach (var link in Model.Links)
         {
-            <li class="nhsuk-breadcrumb__item">
+            <li class="nhsuk-breadcrumb__list-item">
                 @if (link == lastLink)
                 {
                     @link.Title
@@ -23,12 +23,9 @@
 
     @if (Model.Links.Count > 0)
     {
-        <p class="nhsuk-breadcrumb__back">
-            <a class="nhsuk-breadcrumb__backlink" asp-controller="@lastLink.aspController" asp-action="@lastLink.aspAction" asp-all-route-data="@lastLink.aspRouteData">
-                <span class="nhsuk-u-visually-hidden">Back to &nbsp;</span>
-                @lastLink.Title
-            </a>
-        </p>
+        <a class="nhsuk-back-link" asp-controller="@lastLink.aspController" asp-action="@lastLink.aspAction" asp-all-route-data="@lastLink.aspRouteData">
+            @lastLink.Title
+        </a>
     }
 
 </nav>
