@@ -10,7 +10,7 @@ namespace NHSUKFrontendRazor.ViewModels
 
         public readonly string LinkText;
 
-        public readonly string Href;
+        public readonly string Url;
 
         public readonly Dictionary<string, string>? AspAllRouteData;
 
@@ -22,10 +22,10 @@ namespace NHSUKFrontendRazor.ViewModels
             AspAllRouteData = aspAllRouteData;
         }
 
-        public LinkViewModel(string linkText, string href)
+        public LinkViewModel(string linkText, string url)
         {
             LinkText = linkText;
-            Href = href;
+            Url = url;
         }
     }
 }
