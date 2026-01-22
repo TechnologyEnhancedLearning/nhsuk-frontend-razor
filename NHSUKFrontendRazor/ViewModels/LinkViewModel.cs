@@ -10,14 +10,22 @@ namespace NHSUKFrontendRazor.ViewModels
 
         public readonly string LinkText;
 
-        public readonly Dictionary<string, string> AspAllRouteData;
+        public readonly string Href;
 
-        public LinkViewModel(string aspController, string aspAction, string linkText, Dictionary<string, string> aspAllRouteData)
+        public readonly Dictionary<string, string>? AspAllRouteData;
+
+        public LinkViewModel(string aspController, string aspAction, string linkText, Dictionary<string, string>? aspAllRouteData = null)
         {
             AspAction = aspAction;
             AspController = aspController;
             LinkText = linkText;
             AspAllRouteData = aspAllRouteData;
+        }
+
+        public LinkViewModel(string linkText, string href)
+        {
+            LinkText = linkText;
+            Href = href;
         }
     }
 }
