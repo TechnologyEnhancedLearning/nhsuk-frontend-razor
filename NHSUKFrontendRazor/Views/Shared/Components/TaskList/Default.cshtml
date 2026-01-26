@@ -1,4 +1,5 @@
-@model NHSUKFrontendRazor.ViewModels.TaskListViewModel
+@using TaskListViewModel = NHSUKFrontendRazor.ViewModels.TaskListViewModel;
+@using TaskStateStyle = NHSUKFrontendRazor.ViewModels.TaskStateStyle;
 
 <ul class="nhsuk-task-list">
     @foreach (var task in Model.ListItems)
