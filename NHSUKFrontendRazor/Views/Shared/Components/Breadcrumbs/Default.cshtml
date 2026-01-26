@@ -1,7 +1,7 @@
 @model NHSUKFrontendRazor.ViewModels.BreadcrumbsViewModel
 
 @{
-    var lastLink = Model.Links.Count > 0 ? Model.Links[Model.Links.Count - 1] : (null, null, null, null);
+    var lastLink = Model.Links.Count > 0 ? Model.Links[Model.Links.Count - 1] : null;
 }
 <nav class="nhsuk-breadcrumb" aria-label="Breadcrumb">
     <ol class="nhsuk-breadcrumb__list">
@@ -10,11 +10,11 @@
             <li class="nhsuk-breadcrumb__list-item">
                 @if (link == lastLink)
                 {
-                    @link.Title
+                    @link.LinkText
                 }
                 else
                 {
-                    <a class="nhsuk-breadcrumb__link" asp-controller="@link.aspController" asp-action="@link.aspAction" asp-all-route-data="@link.aspRouteData">@link.Title</a>
+                    <a class="nhsuk-breadcrumb__link" href="@link.Url">@link.LinkText</a>
                 }
             </li>
         }
@@ -22,8 +22,8 @@
 
     @if (Model.Links.Count > 0)
     {
-        <a class="nhsuk-back-link" asp-controller="@lastLink.aspController" asp-action="@lastLink.aspAction" asp-all-route-data="@lastLink.aspRouteData">
-            @lastLink.Title
+        <a class="nhsuk-back-link" href="@lastLink.Url">
+            @lastLink.LinkText
         </a>
     }
 
