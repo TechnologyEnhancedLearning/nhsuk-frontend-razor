@@ -1,4 +1,4 @@
-namespace NHSUKFrontendRazor.ViewComponents.NHS
+namespace NHSUKFrontendRazor.ViewComponents
 {
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
