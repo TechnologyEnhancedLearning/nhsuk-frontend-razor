@@ -10,7 +10,7 @@ namespace NHSUKFrontendRazor.ViewComponents
     {
         public IViewComponentResult Invoke(
             string text,
-            string style,
+            string? style = null,
             string styling = ButtonStyle.PRIMARY,
             string? aspController = null,
             string? aspAction = null,
