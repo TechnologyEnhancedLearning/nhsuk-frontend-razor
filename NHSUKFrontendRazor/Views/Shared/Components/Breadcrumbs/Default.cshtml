@@ -8,14 +8,7 @@
         @foreach (var link in Model.Links)
         {
             <li class="nhsuk-breadcrumb__list-item">
-                @if (link == lastLink)
-                {
-                    @link.LinkText
-                }
-                else
-                {
-                    <a class="nhsuk-breadcrumb__link" href="@link.Url">@link.LinkText</a>
-                }
+                <a class="nhsuk-breadcrumb__link" href="@link.Url">@link.LinkText</a>
             </li>
         }
     </ol>
