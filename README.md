@@ -10,7 +10,12 @@ This library is **Tag-helper focused**, meaning you can pass parameters directly
 
 Use Visual Studio IDE to build the project to generate a package or through the console/terminal command `dotnet pack --configuration Release --output ./nupkg`
 
-### 2. Initialise
+### 2. Generate package
+
+Add relative imports at the very top of the document
+* Specify the model of the component in use, e.g. `@model NHSUKFrontendRazor.ViewModels.ButtonViewModel` or `@using ButtonViewModel = NHSUKFrontendRazor.ViewModels.ButtonViewModel` if a `@model` already exists.
+
+### 3. Initialise
 
 #### A) Tag Helper (Recommended)
 
