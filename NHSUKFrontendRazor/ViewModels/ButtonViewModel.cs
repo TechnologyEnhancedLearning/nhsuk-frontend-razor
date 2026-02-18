@@ -15,17 +15,13 @@ namespace NHSUKFrontendRazor.ViewModels
         /// <param name="preventDoubleClick">Indicates whether to prevent double-clicking the button. Defaults to <c>false</c>.</param>
         public ButtonViewModel(
             string text,
-            string? aspController,
-            string? aspAction,
-            Dictionary<string, string>? aspRouteData,
+            LinkViewModel link,
             string styling,
             string style,
             bool preventDoubleClick)
         {
             Text = text;
-            AspController = aspController;
-            AspAction = aspAction;
-            AspRouteData = aspRouteData;
+            Link = link;
             Styling = styling;
             Style = style;
             PreventDoubleClick = preventDoubleClick;
@@ -37,19 +33,9 @@ namespace NHSUKFrontendRazor.ViewModels
         public string Text { get; set; }
 
         /// <summary>
-        /// Gets or sets the asp-controller of the link.
+        /// Gets or sets the link.
         /// </summary>
-        public string? AspController { get; set; }
-
-        /// <summary>
-        /// Gets or sets the asp-action of the link.
-        /// </summary>
-        public string? AspAction { get; set; }
-
-        /// <summary>
-        /// Gets or sets the asp-all-route-data of the link.
-        /// </summary>
-        public Dictionary<string, string>? AspRouteData { get; set; }
+        public LinkViewModel? Link { get; set; }
 
         /// <summary>
         /// Gets or sets the styling for the button.

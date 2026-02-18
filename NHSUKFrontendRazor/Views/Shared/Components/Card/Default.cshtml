@@ -1,7 +1,7 @@
 @model NHSUKFrontendRazor.ViewModels.CardViewModel
 
 @{
-    var isClickable = !string.IsNullOrWhiteSpace(Model.AspController);
+    var isClickable = Model.Link != null;
     var secondaryParent = Model.IsSecondary ? "nhsuk-card--secondary" : "";
     var secondaryContent = Model.IsSecondary ? "nhsuk-card__content--secondary" : "nhsuk-card__content--primary";
     var headingLevel = Model.HeadingLevel != 2 && (Model.HeadingLevel >= 1 && Model.HeadingLevel <= 6) ? "h" + Model.HeadingLevel : "h2";
@@ -22,7 +22,7 @@
         @Html.Raw(headingOpening)
         @if (isClickable)
         {
-            <a class="nhsuk-card__link" asp-controller="@Model.AspController" asp-action="@Model.AspAction" asp-all-route-data="@Model.AspRouteData">@Model.Title</a>
+            <a class="nhsuk-card__link" asp-controller="@Model.Link.AspController" asp-action="@Model.Link.AspAction" asp-all-route-data="@Model.Link.AspAllRouteData">@Model.Title</a>
         }
         else
         {
