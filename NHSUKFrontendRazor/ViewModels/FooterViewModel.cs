@@ -44,7 +44,7 @@ namespace NHSUKFrontendRazor.ViewModels
         /// <param name="footerItemList">A collection of footer items in this group.</param>
         /// <param name="isMeta">Indicates whether this group contains meta items. Default is false.</param>
         public FooterItemGroupModel(
-            IEnumerable<FooterItemViewModel> footerItemList,
+            IEnumerable<LinkViewModel> footerItemList,
             bool isMeta = false)
         {
             FooterItemList = footerItemList;
@@ -54,7 +54,7 @@ namespace NHSUKFrontendRazor.ViewModels
         /// <summary>
         /// Gets or sets the list of footer items in this group.
         /// </summary>
-        public IEnumerable<FooterItemViewModel> FooterItemList { get; set; }
+        public IEnumerable<LinkViewModel> FooterItemList { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this group contains meta items.
