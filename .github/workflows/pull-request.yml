@@ -49,6 +49,12 @@ jobs:
           echo "FullSemVer: ${{ steps.gitversion.outputs.fullSemVer }}"
           echo "NuGetVersion: ${{ steps.gitversion.outputs.nuGetVersion }}"
 
+      - name: Debug GitVersion outputs
+        run: |
+          echo "All outputs:"
+          echo "nuGetVersion = ${{ steps.gitversion.outputs.nuGetVersion }}"
+          echo "fullSemVer = ${{ steps.gitversion.outputs.fullSemVer }}"
+
       - name: Package nuget
         run: dotnet pack "$SOLUTION" --configuration "$BUILD_CONFIG" -o package /p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersion }}
 
