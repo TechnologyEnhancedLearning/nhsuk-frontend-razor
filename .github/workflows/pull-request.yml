@@ -46,18 +46,16 @@ jobs:
 
       - name: Display GitVersion outputs
         run: |
+          echo "MajorMinorPatch: ${{ steps.gitversion.outputs.majorMinorPatch }}"
+          echo "SemVer: ${{ steps.gitversion.outputs.semVer }}"
           echo "FullSemVer: ${{ steps.gitversion.outputs.fullSemVer }}"
           echo "NuGetVersion: ${{ steps.gitversion.outputs.nuGetVersion }}"
+          echo "NuGetVersionV2: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
 
-      - name: Debug GitVersion outputs
-        run: |
-          echo "All outputs:"
-          echo "nuGetVersion = ${{ steps.gitversion.outputs.nuGetVersion }}"
-          echo "fullSemVer = ${{ steps.gitversion.outputs.fullSemVer }}"
 
       - name: Package nuget
-        run: dotnet pack "$SOLUTION" --configuration "$BUILD_CONFIG" -o package /p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersion }}
+        run: dotnet pack "$SOLUTION" --configuration "$BUILD_CONFIG" -o package /p:PackageVersion=${{ steps.gitversion.outputs.majorMinorPatch }}
 
       - name: Push generated package to GitHub registry
         if: startsWith(github.ref, 'refs/tags/v')
-        run: dotnet nuget push ./package/*.nupkg --api-key ${{ secrets.NUGETKEY }} --source "githubPackages" --skip-duplicate
+        run: dotnet nuget push ./package/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source "github" --skip-duplicate
