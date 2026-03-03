@@ -46,20 +46,8 @@ jobs:
 
       - name: Display GitVersion outputs
         run: |
-          echo "Major: ${{ steps.gitversion.outputs.major }}"
-          echo "Minor: ${{ steps.gitversion.outputs.minor }}"
-          echo "Patch: ${{ steps.gitversion.outputs.patch }}"
-          echo "NuGetVersionV2: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
-
-      - name: Add github registry
-        run: dotnet nuget add source --username ${{ github.actor }} --password $GITHUB_TOKEN --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
-
-      - name: Dotnet build
-        run: dotnet build "$SOLUTION" --configuration "$BUILD_CONFIG"
+          echo "FullSemVer: ${{ steps.gitversion.outputs.fullSemVer }}"
+          echo "NuGetVersion: ${{ steps.gitversion.outputs.nuGetVersion }}"
 
       - name: Package nuget
-        run: dotnet pack "$SOLUTION" --configuration "$BUILD_CONFIG" -o package /p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }}
-
-      - name: Push generated package to GitHub registry
-        if: startsWith(github.ref, 'refs/tags/v')
-        run: dotnet nuget push ./package/*.nupkg --api-key ${{ secrets.NUGETKEY }} --source "githubPackages" --skip-duplicate
+        run: dotnet pack "$SOLUTION" --configuration "$BUILD_CONFIG" -o package /p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersion }}
