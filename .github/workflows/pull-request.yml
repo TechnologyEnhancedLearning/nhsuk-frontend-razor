@@ -15,7 +15,7 @@ jobs:
       SOLUTION: NHSUKFrontendRazor.sln
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       OWNER: ${{ github.repository_owner }}
-      NUGET_PACKAGE: DotnetViewComponents
+      NUGET_PACKAGE: NHSUKFrontendRazor
 
     strategy:
       matrix:
@@ -52,10 +52,15 @@ jobs:
           echo "NuGetVersion: ${{ steps.gitversion.outputs.nuGetVersion }}"
           echo "NuGetVersionV2: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
 
+      - name: Add github registry
+        run: dotnet nuget add source --username ${{ github.actor }} --password $GITHUB_TOKEN --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
+
+      - name: Dotnet build
+        run:  dotnet build "$SOLUTION" --configuration release
 
       - name: Package nuget
         run: dotnet pack "$SOLUTION" --configuration "$BUILD_CONFIG" -o package /p:PackageVersion=${{ steps.gitversion.outputs.majorMinorPatch }}
 
       - name: Push generated package to GitHub registry
         if: startsWith(github.ref, 'refs/tags/v')
-        run: dotnet nuget push ./package/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source "github" --skip-duplicate
+        run: dotnet nuget push ./package/*.nupkg --api-key "$GITHUB_TOKEN" --source "github" --skip-duplicate
