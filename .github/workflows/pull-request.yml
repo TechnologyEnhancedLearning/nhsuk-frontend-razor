@@ -9,7 +9,7 @@ jobs:
         OWNER: ${{ github.repository_owner }}
         NUGET_PACKAGE: "DotnetViewComponents"
       name: Build and publish package
-      runs-on: ubuntu-20.04 
+      runs-on: ubuntu-24.04
       permissions:
           packages: write
       strategy: 
