@@ -51,3 +51,7 @@ jobs:
 
       - name: Package nuget
         run: dotnet pack "$SOLUTION" --configuration "$BUILD_CONFIG" -o package /p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersion }}
+
+      - name: Push generated package to GitHub registry
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: dotnet nuget push ./package/*.nupkg --api-key ${{ secrets.NUGETKEY }} --source "githubPackages" --skip-duplicate
