@@ -16,8 +16,8 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITHUB_OWNER: ${{ github.repository_owner }}
       AZURE_OWNER: ${{ secrets.TEL_AZURE_DEVOPS_USERNAME }}
-      AZURE_PATH: ${{ secrets.AZURE_DEVOPS_PAT }}
-      AZURE_KEY: ${{ secrets.AZUREDEVOPSKEY}}
+      AZURE_PATH: ${{ secrets.AZURE_PACKAGES_PATH }}
+      AZURE_KEY: ${{ secrets.AZUREDEVOPSKEY }}
       NUGET_PACKAGE: NHSUKFrontendRazor
 
     strategy:
