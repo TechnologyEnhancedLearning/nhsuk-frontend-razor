@@ -64,11 +64,6 @@ jobs:
           echo "AZURE_PATH is: $AZURE_PATH"
           echo "AZURE_KEY is: $AZURE_KEY"
           echo "AZURE_DEVOPS_PAT is: ${{ secrets.AZURE_DEVOPS_PAT }}"
-          if [ -n "$AZURE_KEY" ]; then
-            echo "AZURE_KEY exists"
-          else
-            echo "AZURE_KEY is empty"
-          fi
           echo "END:----------------------------"
 
       - name: Add Azure artifact
