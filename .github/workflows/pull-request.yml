@@ -16,7 +16,7 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITHUB_OWNER: ${{ github.repository_owner }}
       AZURE_OWNER: 'kevin.whittaker'
-      AZURE_PATH: ${{ secrets.AZURE_PACKAGES_PATH }}
+      AZURE_PATH: 'https://pkgs.dev.azure.com/e-LfH/_packaging/LearningHubFeed/nuget/v3/index.json'
       AZURE_KEY: $AZURE_KEY
       NUGET_PACKAGE: NHSUKFrontendRazor
 
