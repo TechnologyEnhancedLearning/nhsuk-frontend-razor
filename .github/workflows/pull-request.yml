@@ -55,6 +55,18 @@ jobs:
           echo "NuGetVersion: ${{ steps.gitversion.outputs.nuGetVersion }}"
           echo "NuGetVersionV2: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
 
+      - name: Print environment variable
+        run: |
+          echo "START:----------------------------"
+          echo "GITHUB_TOKEN is: $GITHUB_TOKEN"
+          echo "GITHUB_OWNER is: $GITHUB_OWNER"
+          echo "AZURE_OWNER is: $AZURE_OWNER"
+          echo "AZURE_PATH is: $AZURE_PATH"
+          echo "AZURE_KEY is: $AZURE_KEY"
+          echo "AZURE_DEVOPS_PAT is: ${{ secrets.AZURE_DEVOPS_PAT }}"
+          echo "AZUREDEVOPS is: ${{ AZUREDEVOPS }}"
+          echo "END:----------------------------"
+
       - name: Add Azure artifact
         run: dotnet nuget add source 'https://pkgs.dev.azure.com/e-LfH/_packaging/LearningHubFeed/nuget/v3/index.json' --name 'LearningHubFeed'  --username 'kevin.whittaker' --password ${{ secrets.AZUREDEVOPSKEY }} --store-password-in-clear-text
 
