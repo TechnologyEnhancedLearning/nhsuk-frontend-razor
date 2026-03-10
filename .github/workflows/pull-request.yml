@@ -15,9 +15,9 @@ jobs:
       SOLUTION: NHSUKFrontendRazor.sln
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITHUB_OWNER: ${{ github.repository_owner }}
-      AZURE_OWNER: 'kevin.whittaker'
-      AZURE_PATH: 'https://pkgs.dev.azure.com/e-LfH/_packaging/LearningHubFeed/nuget/v3/index.json'
-      AZURE_KEY: $AZURE_KEY
+      AZURE_OWNER: ${{ secrets.TEL_AZURE_DEVOPS_USERNAME }}
+      AZURE_PATH: ${{ secrets.AZURE_PACKAGES_PATH }}
+      AZURE_KEY: ${{ secrets.AZURE_DEVOPS_PAT }}
       NUGET_PACKAGE: NHSUKFrontendRazor
 
     strategy:
