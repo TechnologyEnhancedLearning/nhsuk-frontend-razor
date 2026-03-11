@@ -9,6 +9,7 @@ jobs:
 
     permissions:
       packages: write
+      contents: write
 
     env:
       BUILD_CONFIG: Release
