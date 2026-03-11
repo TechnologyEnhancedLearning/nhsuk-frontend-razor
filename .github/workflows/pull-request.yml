@@ -60,3 +60,14 @@ jobs:
 
       - name: Push generated package to Azure Feed
         run: dotnet nuget push ./package/*.nupkg  --source "$AZURE_PATH"   --api-key "$AZURE_KEY"  --skip-duplicate
+
+      - name: Tag published version
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/v${{ steps.gitversion.outputs.majorMinorPatch }}',
+              sha: context.sha
+            })
