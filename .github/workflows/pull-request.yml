@@ -1,12 +1,7 @@
 name: Continuous Integration
 
-on: 
-  pull_request:
-    types: [closed]
-    branches:
-      - rc
-      - 'features/test-v10-actions'
-
+on: push
+  
 jobs:
   build:
     name: Build and publish package
