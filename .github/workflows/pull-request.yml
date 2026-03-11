@@ -1,65 +1,68 @@
 name: Continuous Integration
-on: [push]
+
+on: 
+  pull_request:
+    types: [closed]
+    branches:
+      - rc
+      - 'features/test-v10-actions'
+
 jobs:
   build:
-      env:
-        BUILD_CONFIG: 'Release'
-        SOLUTION: 'NHSUKFrontendRazor.sln'
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        OWNER: ${{ github.repository_owner }}
-        NUGET_PACKAGE: "DotnetViewComponents"
-      name: Build and publish package
-      runs-on: ubuntu-20.04 
-      permissions:
-          packages: write
-      strategy: 
-          matrix:
-           dotnet-version: ['3.1.x']
-      steps:
-        - uses: actions/checkout@v2
-          with:
-           fetch-depth: 0
+    name: Build and publish package
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-24.04
 
-        - name: Install ICU library
-          run: sudo apt-get update && sudo apt-get install -y libicu-dev
+    permissions:
+      packages: write
 
-        - name: Setup .NET Core SDK 60
-          uses: actions/setup-dotnet@v1
-          with:
-            dotnet-version: ${{ matrix.dotnet-version }}
+    env:
+      BUILD_CONFIG: Release
+      SOLUTION: NHSUKFrontendRazor.sln
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_OWNER: ${{ github.repository_owner }}
+      AZURE_OWNER: ${{ secrets.TEL_AZURE_DEVOPS_USERNAME }}
+      AZURE_PATH: ${{ secrets.AZURE_PACKAGES_PATH }}
+      AZURE_KEY: ${{ secrets.AZURE_DEVOPS_PAT }}
 
-        - name: Install GitVersion
-          uses: gittools/actions/gitversion/setup@v0.9.7
-          with:
-            versionSpec: '5.5.0'
-            
-        - name: Determine Version
-          id:   gitversion
-          uses: gittools/actions/gitversion/execute@v0.9.7
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-        - name: Display GitVersion outputs
-          run: |
-            echo "Major: ${{ steps.gitversion.outputs.major }}"
-            echo "Minor: ${{ steps.gitversion.outputs.minor }}"
-            echo "Patch: ${{ steps.gitversion.outputs.patch }}"
-            echo "NuGetVersionV2: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
-            
-        # - name: Add Azure artifact
-        #   run: dotnet nuget add source 'https://pkgs.dev.azure.com/e-LfH/_packaging/LearningHubFeed/nuget/v3/index.json' --name 'LearningHubFeed'  --username 'kevin.whittaker' --password ${{ secrets.AZUREDEVOPSKEY }} --store-password-in-clear-text
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
 
-        - name: Add github registry
-          run: dotnet nuget add source --username ${{ github.actor }} --password $GITHUB_TOKEN --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
-       
-        - name: Dotnet build
-          run:  dotnet build NHSUKFrontendRazor.sln --configuration release
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v3.1.2
+        with:
+          versionSpec: '6.0.x'
 
-        - name: Package nuget        
-          run: dotnet pack NHSUKFrontendRazor.sln --configuration release -o:package /p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2  }}
+      - name: Determine Version
+        id: gitversion
+        uses: gittools/actions/gitversion/execute@v3.1.2
 
-        - name: Push generated package to GitHub registry
-          if: startsWith(github.ref, 'refs/tags/v')
-          run: dotnet nuget push ./package/*.nupkg  --api-key ${{ secrets.NUGETKEY }}  --source "githubPackages"  --skip-duplicate
-          
-        # - name: Push generated package to Azure Feed
-        #   if: startsWith(github.ref, 'refs/tags/v')
-        #   run: dotnet nuget push ./package/*.nupkg  --source https://pkgs.dev.azure.com/e-LfH/_packaging/LearningHubFeed/nuget/v3/index.json   --api-key ${{ secrets.AZUREDEVOPSKEY }}  --skip-duplicate
+      - name: Display GitVersion outputs
+        run: |
+          echo "Version will be set to: ${{ steps.gitversion.outputs.majorMinorPatch }}"
+
+      - name: Add Azure artifact
+        run: dotnet nuget add source "$AZURE_PATH" --name 'LearningHubFeed'  --username "$AZURE_OWNER" --password "$AZURE_KEY" --store-password-in-clear-text
+
+      - name: Add github registry
+        run: dotnet nuget add source --username "${{ github.actor }}" --password "$GITHUB_TOKEN" --store-password-in-clear-text --name github "https://nuget.pkg.github.com/$GITHUB_OWNER/index.json"
+
+      - name: Dotnet build
+        run:  dotnet build "$SOLUTION" --configuration release
+
+      - name: Package nuget
+        run: dotnet pack "$SOLUTION" --configuration "$BUILD_CONFIG" -o package /p:PackageVersion=${{ steps.gitversion.outputs.majorMinorPatch }}
+
+      - name: Push generated package to GitHub registry
+        run: dotnet nuget push ./package/*.nupkg --api-key "$GITHUB_TOKEN" --source "github" --skip-duplicate
+
+      - name: Push generated package to Azure Feed
+        run: dotnet nuget push ./package/*.nupkg  --source "$AZURE_PATH"   --api-key "$AZURE_KEY"  --skip-duplicate
