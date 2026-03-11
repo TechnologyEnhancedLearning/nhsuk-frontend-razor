@@ -5,7 +5,6 @@
 
     using Microsoft.AspNetCore.Mvc;
     using NHSUKFrontendRazor.ViewModels;
-    using NHSUKFrontendRazor.ViewModels;
 
     public class RadioListViewComponent : ViewComponent
     {
@@ -24,10 +23,9 @@
         {
             var model = ViewData.Model;
             var property = model.GetType().GetProperty(aspFor);
-            var errorMessages = ViewData.ModelState[property?.Name]?.Errors.Select(e => e.ErrorMessage) ??
-                                new string[] { };
+            var errorMessages = ViewData.ModelState[property?.Name]?.Errors.Select(e => e.ErrorMessage) ?? new string[] { };
 
-            var radiosList = radios.Where(x=>x.Label != optionalRadio).Select(
+            var radiosList = radios.Where(x => x.Label != optionalRadio).Select(
                 r => new RadiosItemViewModel(
                     r.Value,
                     r.Label,
@@ -35,7 +33,7 @@
                     r.HintText
                 )
             );
-            
+
 
             var viewModel = new RadiosViewModel(
                 aspFor,

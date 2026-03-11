@@ -5,7 +5,7 @@ namespace NHSUKFrontendRazor.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="SkipLinkViewModel"/> class.
         /// </summary>
-        /// <param name="maincContentID">The ID of the main content element to which the skip link will navigate.</param>
+        /// <param name="mainContentID">The ID of the main content element to which the skip link will navigate.</param>
         /// <param name="text">The text to be displayed for the skip link.</param>
         public SkipLinkViewModel(
             string mainContentID,

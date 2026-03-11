@@ -9,7 +9,7 @@ namespace NHSUKFrontendRazor.ViewComponents
     /// </summary>
     public class BreadcrumbsViewComponent : ViewComponent
     {
-        public IViewComponentResult Invoke(List<(string Title, string spController, string aspAction, Dictionary<string, string>? aspRouteData)> links)
+        public IViewComponentResult Invoke(List<LinkViewModel> links)
         {
             var model = new BreadcrumbsViewModel(links);
 
