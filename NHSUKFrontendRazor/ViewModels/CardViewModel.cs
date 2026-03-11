@@ -22,7 +22,9 @@ namespace NHSUKFrontendRazor.ViewModels
             int headingLevel,
             bool hasArrow,
             bool isSecondary,
-            LinkViewModel? link)
+            string? aspController,
+            string? aspAction,
+            Dictionary<string, string>? aspRouteData)
         {
             Title = title;
             Description = description;
@@ -30,7 +32,9 @@ namespace NHSUKFrontendRazor.ViewModels
             HeadingLevel = headingLevel;
             HasArrow = hasArrow;
             IsSecondary = isSecondary;
-            Link = link;
+            AspController = aspController;
+            AspAction = aspAction;
+            AspRouteData = aspRouteData;
         }
 
         /// <summary>
@@ -64,8 +68,18 @@ namespace NHSUKFrontendRazor.ViewModels
         public bool IsSecondary { get; set; }
 
         /// <summary>
-        /// Gets or sets the link.
+        /// Gets or sets the asp-controller of the link.
         /// </summary>
-        public LinkViewModel? Link { get; set; }
+        public string? AspController { get; set; }
+
+        /// <summary>
+        /// Gets or sets the asp-action of the link.
+        /// </summary>
+        public string? AspAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets the asp-all-route-data of the link.
+        /// </summary>
+        public Dictionary<string, string>? AspRouteData { get; set; }
     }
 }

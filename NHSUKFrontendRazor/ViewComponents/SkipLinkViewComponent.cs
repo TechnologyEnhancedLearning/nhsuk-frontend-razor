@@ -1,5 +1,6 @@
 namespace NHSUKFrontendRazor.ViewComponents
 {
+    using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
     using NHSUKFrontendRazor.ViewModels;
 

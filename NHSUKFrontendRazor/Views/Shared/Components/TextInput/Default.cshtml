@@ -1,6 +1,6 @@
+@using NHSUKFrontendRazor.ViewModels
 @using NHSUKFrontendRazor.Helpers
-@model NHSUKFrontendRazor.ViewModels.TextInputViewModel
-
+@model TextInputViewModel
 <div class="nhsuk-form-group @(Model.HasError ? "nhsuk-form-group--error" : "")">
     <label class="nhsuk-label @(string.IsNullOrWhiteSpace(Model.Label) ? "nhsuk-u-visually-hidden" : "")" for="@Model.Name">
         @(string.IsNullOrWhiteSpace(Model.Label) ? "N/A" : @Model.Label)

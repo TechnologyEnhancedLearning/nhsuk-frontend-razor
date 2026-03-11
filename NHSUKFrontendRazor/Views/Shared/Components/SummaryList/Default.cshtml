@@ -1,4 +1,5 @@
-@model NHSUKFrontendRazor.ViewModels.SummaryListViewModel
+@using NHSUKFrontendRazor.ViewModels
+@model SummaryListViewModel
 
 @{
 	bool hasActions = !String.IsNullOrWhiteSpace(@Model.SummaryListItem.First().AspController);

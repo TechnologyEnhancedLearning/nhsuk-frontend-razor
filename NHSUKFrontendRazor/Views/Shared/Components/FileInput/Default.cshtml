@@ -1,6 +1,6 @@
+@using NHSUKFrontendRazor.ViewModels
 @using NHSUKFrontendRazor.Helpers
-@model NHSUKFrontendRazor.ViewModels.FileInputViewModel
-
+@model FileInputViewModel
 <div class="nhsuk-form-group @(Model.HasError ? "nhsuk-form-group--error" : "")">
   <label class="nhsuk-label" for="@Model.Name">
     @Model.Label

@@ -8,7 +8,7 @@ namespace NHSUKFrontendRazor.ViewModels
         /// </summary>
         /// <param name="links">A list of tuples representing the breadcrumb links where each tuple contains a title
         /// and a URL in the form of asp-controller, asp-action and asp-routeData.</param>
-        public BreadcrumbsViewModel(List<LinkViewModel> links)
+        public BreadcrumbsViewModel(List<(string title, string aspController, string aspAction, Dictionary<string, string>? aspRouteData)> links)
         {
             Links = links;
         }
@@ -17,7 +17,7 @@ namespace NHSUKFrontendRazor.ViewModels
         /// Gets or sets the list of breadcrumb links.
         /// Each link is represented as a tuple containing the title, ASP.NET controller, ASP.NET action, and optional route data.
         /// </summary>
-        public List<LinkViewModel> Links { get; set; }
+        public List<(string Title, string aspController, string aspAction, Dictionary<string, string>? aspRouteData)> Links { get; set; }
 
     }
 }

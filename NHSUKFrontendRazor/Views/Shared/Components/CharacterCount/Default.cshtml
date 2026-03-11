@@ -1,4 +1,5 @@
-@model NHSUKFrontendRazor.ViewModels.CharacterCountViewModel
+@using NHSUKFrontendRazor.ViewModels
+@model CharacterCountViewModel
 
 <div class="nhsuk-character-count" data-module="nhsuk-character-count"
 @(Model.MaxWords != null ? $"data-maxwords={Model.MaxWords}" : $"data-maxlength={Model.MaxLength}") @(Model.Threshold != null ? $"data-threshold={Model.Threshold}" : "")>

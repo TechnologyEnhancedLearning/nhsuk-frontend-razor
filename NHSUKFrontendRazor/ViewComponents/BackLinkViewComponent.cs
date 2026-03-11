@@ -7,18 +7,13 @@ namespace NHSUKFrontendRazor.ViewComponents
     public class BackLinkViewComponent : ViewComponent
     {
         public IViewComponentResult Invoke(
-            string? href = null,
-            string? aspController = null,
-            string? aspAction = null,
-            Dictionary<string, string>? aspAllRouteData = null,
-            string? linkText = null
+            string aspController,
+            string aspAction,
+            Dictionary<string, string> aspAllRouteData,
+            string linkText
         )
         {
-            LinkViewModel? link = !string.IsNullOrWhiteSpace(href) ? new LinkViewModel(linkText, href)
-                : !string.IsNullOrWhiteSpace(aspController) ? new LinkViewModel(aspController, aspAction ?? "", linkText, aspAllRouteData)
-                : null;
-
-            return View(link);
+            return View(new LinkViewModel(aspController, aspAction, linkText, aspAllRouteData));
         }
     }
 }

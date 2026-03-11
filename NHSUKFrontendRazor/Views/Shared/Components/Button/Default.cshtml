@@ -1,11 +1,12 @@
-@model NHSUKFrontendRazor.ViewModels.ButtonViewModel
+@using NHSUKFrontendRazor.ViewModels
+@model ButtonViewModel
 
 @{
-	var isLink = Model.Link != null;
+	var isLink = !String.IsNullOrWhiteSpace(Model.AspController);
 	var tagType = isLink ? "a" : "button";
 	var canSubmit = isLink ? "role=\"button\"" : "type =\"submit\"";
 	var undecorate = isLink ? "text-decoration: none;" : "";
-	var url = !String.IsNullOrWhiteSpace(Model.Link.Url) ? Model.Link.Url : Url.Action(Model.Link.AspAction, Model.Link.AspController, Model.Link.AspAllRouteData);
+	var url = Url.Action(Model.AspAction, Model.AspController, Model.AspRouteData);
 	var href = isLink ? $"href=\"{url}\"" : "";
 	var preventDoubleClick = @Model.PreventDoubleClick ? "data-prevent-double-click=true" : "";
 

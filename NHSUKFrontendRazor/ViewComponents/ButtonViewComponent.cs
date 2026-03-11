@@ -10,19 +10,14 @@ namespace NHSUKFrontendRazor.ViewComponents
     {
         public IViewComponentResult Invoke(
             string text,
-            string? style = null,
+            string style,
             string styling = ButtonStyle.PRIMARY,
-            string? href = null,
             string? aspController = null,
             string? aspAction = null,
             Dictionary<string, string>? aspRouteData = null,
             bool preventDoubleClick = false)
         {
-            LinkViewModel? link = !string.IsNullOrWhiteSpace(href) ? new LinkViewModel(text, href)
-                : !string.IsNullOrWhiteSpace(aspController) ? new LinkViewModel(aspController, aspAction ?? "", text, aspRouteData)
-                : null;
-
-            var model = new ButtonViewModel(text, link, styling, style, preventDoubleClick);
+            var model = new ButtonViewModel(text, aspController, aspAction, aspRouteData, styling, style, preventDoubleClick);
 
             return View(model);
         }

@@ -1,6 +1,6 @@
+@using NHSUKFrontendRazor.ViewModels
 @using NHSUKFrontendRazor.Helpers
-@model NHSUKFrontendRazor.ViewModels.TextAreaViewModel
-
+@model TextAreaViewModel
 @{
     string? describedBy = ViewComponentDynamicAttributeHelper.GetAriaDescribedByAttribute(Model.Name, Model.HasError, Model.HintText);
     @if (Model.CharacterCount.HasValue)

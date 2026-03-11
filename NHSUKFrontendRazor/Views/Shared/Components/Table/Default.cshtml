@@ -1,4 +1,5 @@
-@model NHSUKFrontendRazor.ViewModels.TableViewModel
+@using NHSUKFrontendRazor.ViewModels
+@model TableViewModel
 
 <table role="table" class="@(Model.IsResponsive ? "nhsuk-table-responsive" : "")">
     <caption class="nhsuk-table__caption">@Model.Title</caption>

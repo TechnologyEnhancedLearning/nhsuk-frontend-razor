@@ -1,6 +1,6 @@
+@using NHSUKFrontendRazor.ViewModels
 @using NHSUKFrontendRazor.Helpers
-@model NHSUKFrontendRazor.ViewModels.NumericInputViewModel
-
+@model NumericInputViewModel
 <div class="nhsuk-form-group @(Model.HasError ? "nhsuk-form-group--error" : "")">
     <label class="nhsuk-label" for="@Model.Id">
         @Model.Label
