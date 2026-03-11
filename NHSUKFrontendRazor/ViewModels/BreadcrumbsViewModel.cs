@@ -4,7 +4,7 @@ namespace NHSUKFrontendRazor.ViewModels
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BreadcrumbsViewModel"/> class.
-        /// It receives a list of of string tuples containing the name/title of the link and the url path to it. ONe
+        /// It receives a list of of string tuples containing the name/title of the link and the url path to it. Onne
         /// </summary>
         /// <param name="links">A list of tuples representing the breadcrumb links where each tuple contains a title
         /// and a URL in the form of asp-controller, asp-action and asp-routeData.</param>
