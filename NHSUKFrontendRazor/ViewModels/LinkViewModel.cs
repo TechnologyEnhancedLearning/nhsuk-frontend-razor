@@ -4,7 +4,7 @@ namespace NHSUKFrontendRazor.ViewModels
 
     public class LinkViewModel
     {
-        public readonly string AspAction;
+        public readonly string? AspAction;
 
         public readonly string AspController;
 
