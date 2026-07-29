@@ -33,12 +33,12 @@
                 if (!string.IsNullOrWhiteSpace(Model.Class))
                 {
                     <div class="@Model.Class">
-                        <partial name="_CheckboxItem" model="checkbox" />
+                        <partial name="../CheckboxItem/Default.cshtml" model="checkbox" />
                     </div>
                 }
                 else
                 {
-                    <partial name="_CheckboxItem" model="checkbox" />
+                    <partial name="../CheckboxItem/Default.cshtml" model="checkbox" />
                 }
 
             }
