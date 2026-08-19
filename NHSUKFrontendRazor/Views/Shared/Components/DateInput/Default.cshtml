@@ -99,19 +99,18 @@
         </div>
     </fieldset>
     <script>
-        const fields = [@Model.DayId, @Model.MonthId, @Model.YearId];
+
+        const fields = [
+            document.getElementById('@Model.DayId'),
+            document.getElementById('@Model.MonthId'),
+            document.getElementById('@Model.YearId')
+        ];
 
         const errorElement = document.getElementById('date-error');
-        for (let field of fields) {
-            const inputElement = document.getElementById(field.id);
+        for (let inputElement of fields) {
+            inputElement.addEventListener('input', function () {
 
-            inputElement.addEventListener('input', function (event) {
-
-                if (event.inputType === 'deleteContentBackward') {
-                    return;
-                }
-
-                const value = event.data;
+                const value = inputElement.value;
                 const min = parseInt(inputElement.getAttribute('min'));
                 const max = parseInt(inputElement.getAttribute('max'));
 
@@ -119,16 +118,28 @@
                 errorElement.textContent = '';
                 errorElement.style.visibility = 'hidden';
 
-                setTimeout(function () {
-                    if (value < 1 || value > max || !value.match(/^[0-9]*$/)) {
-                        inputElement.value = inputElement.value.slice(0, -1) + 1;
-                        inputElement.value = inputElement.value.slice(0, -1);
+                if (value === '') {
+                    return;
+                }
+
+                if (!/^[0-9]*$/.test(value)) {
+                    inputElement.value = value.slice(0, -1);
+                    return;
+                }
+
+                // Only validate min/max once the full value has been entered
+                if (value.length >= String(min).length) {
+                    const numericValue = parseInt(value, 10);
+
+                    if (numericValue < min || numericValue > max) {
                         inputElement.setAttribute('aria-invalid', 'true');
-                        errorElement.textContent = `Invalid input. Please enter a number between ${min} and ${max}.`;
+                        errorElement.textContent =
+                            `Invalid input. Please enter a number between ${min} and ${max}.`;
                         errorElement.style.visibility = 'visible';
                     }
-                }, 0);
+                }
             });
         }
+
     </script>
 </div>
