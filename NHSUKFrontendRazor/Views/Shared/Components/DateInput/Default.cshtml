@@ -102,6 +102,7 @@
         const fields = [@Model.DayId, @Model.MonthId, @Model.YearId];
 
         const errorElement = document.getElementById('date-error');
+
         for (let field of fields) {
             const inputElement = document.getElementById(field.id);
 
@@ -111,7 +112,7 @@
                     return;
                 }
 
-                const value = event.data;
+                const value = inputElement.value;
                 const min = parseInt(inputElement.getAttribute('min'));
                 const max = parseInt(inputElement.getAttribute('max'));
 
@@ -120,8 +121,9 @@
                 errorElement.style.visibility = 'hidden';
 
                 setTimeout(function () {
-                    if (value < 1 || value > max || !value.match(/^[0-9]*$/)) {
-                        inputElement.value = inputElement.value.slice(0, -1) + 1;
+                    // Only validate that the input contains numbers while typing.
+                    // Do not validate min/max against individual characters.
+                    if (value !== '' && !/^[0-9]*$/.test(value)) {
                         inputElement.value = inputElement.value.slice(0, -1);
                         inputElement.setAttribute('aria-invalid', 'true');
                         errorElement.textContent = `Invalid input. Please enter a number between ${min} and ${max}.`;
