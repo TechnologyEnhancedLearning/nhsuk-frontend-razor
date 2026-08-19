@@ -99,37 +99,38 @@
         </div>
     </fieldset>
     <script>
-        const fields = [@Model.DayId, @Model.MonthId, @Model.YearId];
+        const fields = [
+            document.getElementById('@Model.DayId'),
+            document.getElementById('@Model.MonthId'),
+            document.getElementById('@Model.YearId')
+        ];
 
         const errorElement = document.getElementById('date-error');
 
-        for (let field of fields) {
-            const inputElement = document.getElementById(field.id);
+        for (let inputElement of fields) {
+            if (!inputElement) {
+                continue;
+            }
 
-            inputElement.addEventListener('input', function (event) {
-
-                if (event.inputType === 'deleteContentBackward') {
-                    return;
-                }
-
+            inputElement.addEventListener('input', function () {
                 const value = inputElement.value;
-                const min = parseInt(inputElement.getAttribute('min'));
-                const max = parseInt(inputElement.getAttribute('max'));
+                const min = parseInt(inputElement.getAttribute('min'), 10);
+                const max = parseInt(inputElement.getAttribute('max'), 10);
 
                 inputElement.setAttribute('aria-invalid', 'false');
                 errorElement.textContent = '';
                 errorElement.style.visibility = 'hidden';
 
-                setTimeout(function () {
-                    // Only validate that the input contains numbers while typing.
-                    // Do not validate min/max against individual characters.
-                    if (value !== '' && !/^[0-9]*$/.test(value)) {
-                        inputElement.value = inputElement.value.slice(0, -1);
-                        inputElement.setAttribute('aria-invalid', 'true');
-                        errorElement.textContent = `Invalid input. Please enter a number between ${min} and ${max}.`;
-                        errorElement.style.visibility = 'visible';
-                    }
-                }, 0);
+                // Allow the user to type each digit, including 0.
+                if (value !== '' && !/^[0-9]*$/.test(value)) {
+                    inputElement.value = value.replace(/[^0-9]/g, '');
+                    inputElement.setAttribute('aria-invalid', 'true');
+
+                    errorElement.textContent =
+                        `Invalid input. Please enter a number between ${min} and ${max}.`;
+
+                    errorElement.style.visibility = 'visible';
+                }
             });
         }
     </script>
