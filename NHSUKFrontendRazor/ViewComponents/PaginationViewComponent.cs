@@ -9,13 +9,12 @@ namespace NHSUKFrontendRazor.ViewComponents
     public class PaginationViewComponent : ViewComponent
     {
         public IViewComponentResult Invoke(
-            int currentPage,
-            int totalPage,
+            string currentPage,
+            string totalPage,
             string prevUrl,
             string nextUrl)
         {
             var model = new PaginationViewModel(currentPage, totalPage, prevUrl, nextUrl);
-
             return View(model);
         }
     }
