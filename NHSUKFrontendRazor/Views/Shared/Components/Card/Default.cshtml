@@ -1,47 +1,119 @@
 @model NHSUKFrontendRazor.ViewModels.CardViewModel
 
 @{
-    var isClickable = Model.Link != null;
-    var secondaryParent = Model.IsSecondary ? "nhsuk-card--secondary" : "";
-    var secondaryContent = Model.IsSecondary ? "nhsuk-card__content--secondary" : "nhsuk-card__content--primary";
-    var headingLevel = Model.HeadingLevel != 2 && (Model.HeadingLevel >= 1 && Model.HeadingLevel <= 6) ? "h" + Model.HeadingLevel : "h2";
-    var headingOpening = $"<{headingLevel} class=\"nhsuk-card__heading nhsuk-heading-m\">";
-    var headingClosing = $"</{headingLevel}>";
+    var isDashboard = Model.IsDashboardCard;
+    var headingLevel = (Model.HeadingLevel >= 1 && Model.HeadingLevel <= 6) ? $"h{Model.HeadingLevel}" : "h2";
 }
 
-<div class="nhsuk-card @(isClickable ? "nhsuk-card--clickable" : "") @secondaryParent">
+<div class="nhsuk-card @(isDashboard ? "dashboard-card" : (Model.Link != null ? "nhsuk-card--clickable" : "")) @(Model.IsSecondary ? "nhsuk-card--secondary" : "")">
 
-    @if (!string.IsNullOrEmpty(Model.ImageSrc))
+    @if (Model.HasBanner)
+    {
+        <div class="nhsuk-card-banner-container">
+            @if (!string.IsNullOrEmpty(Model.ImageSrc))
+            {
+                <img class="nhsuk-card__img nhsuk-card-banner" src="@Model.ImageSrc" alt="">
+            }
+            else
+            {
+                <div class="nhsuk-bg-pale-blue nhsuk-card-banner nhsuk-card-banner-empty"></div>
+            }
+        </div>
+    }
+    else if (!string.IsNullOrEmpty(Model.ImageSrc))
     {
         <img class="nhsuk-card__img" src="@Model.ImageSrc" alt="">
     }
 
-    <div class="nhsuk-card__content @secondaryContent">
+    <div class="nhsuk-card__content @(isDashboard ? "dashboard-card-content" : "")">
 
+        <div>
+            @Html.Raw($"<{headingLevel} class=\"nhsuk-card__heading nhsuk-heading-m {(isDashboard ? "line-clamp-5" : "")}\">")
+            @if (Model.Link != null)
+            {
+                <a class="nhsuk-card__link" asp-controller="@Model.Link.AspController" asp-action="@Model.Link.AspAction" asp-all-route-data="@Model.Link.AspAllRouteData" href="@Model.Link.Url">@Model.Title</a>
+            }
+            else
+            {
+                @Model.Title
+            }
+            @Html.Raw($"</{headingLevel}>")
+        </div>
 
-        @Html.Raw(headingOpening)
-        @if (isClickable)
+        @if (isDashboard)
         {
-            <a class="nhsuk-card__link" asp-controller="@Model.Link.AspController" asp-action="@Model.Link.AspAction" asp-all-route-data="@Model.Link.AspAllRouteData">@Model.Title</a>
+            <div class="nhsuk-card__description dashboard-card-body">
+                <div>
+                    @if (!string.IsNullOrEmpty(Model.ResourceType))
+                    {
+                        <div class="nhsuk-body-s nhsuk-u-margin-bottom-2point5">
+                            <span class="nhsuk-u-font-weight-bold">Type:</span> @Model.ResourceType
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.Description))
+                    {
+                        <div class="nhsuk-u-margin-bottom-2point5 line-clamp-3">
+                            @Html.Raw(Model.Description)
+                        </div>
+                    }
+
+                    @if (Model.CatalogueLink != null)
+                    {
+                        <div class="nhsuk-u-font-size-16 nhsuk-u-margin-bottom-2point5 line-clamp-1">
+                            <a href="@Model.CatalogueLink.Url">@Model.CatalogueLink.LinkText</a>
+                        </div>
+                    }
+
+                    @if (Model.RatingContent != null)
+                    {
+                        <div class="nhsuk-body-s nhsuk-u-margin-bottom-2 star-rating-container">
+                            @Model.RatingContent
+                        </div>
+                    }
+                </div>
+
+                <div class="catalogue-meta">
+                    <div>
+                        @if (!string.IsNullOrEmpty(Model.AccessPermission))
+                        {
+                            <div class="nhsuk-u-margin-bottom-2 nhsuk-u-font-size-16 nhsuk-u-font-weight-bold">
+                                @Model.AccessPermission
+                            </div>
+                        }
+                        @if (Model.BookmarkLink != null)
+                        {
+                            <div>
+                                <a class="nhsuk-u-font-size-16 nhsuk-u-margin-right-3" href="@Model.BookmarkLink.Url">
+                                    @Model.BookmarkLink.LinkText
+                                </a>
+                            </div>
+                        }
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.BadgeSrc))
+                    {
+                        <div>
+                            <img src="@Model.BadgeSrc" alt="Badge" class="catalogue-badge" />
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        else if (!string.IsNullOrEmpty(Model.Description))
+        {
+            <p class="nhsuk-card__description">@Html.Raw(Model.Description)</p>
+        }
+    </div>
+
+    @if (isDashboard)
+    {
+        if (!string.IsNullOrEmpty(Model.ProviderDetails))
+        {
+            <div class="card-provider-details">@Model.ProviderDetails</div>
         }
         else
         {
-            @Model.Title
+            <div class="card-provider-details @Model.ProviderFooterClass"></div>
         }
-        @Html.Raw(headingClosing)
-
-
-        @if (!string.IsNullOrEmpty(Model.Description))
-        {
-            <p class="nhsuk-card__description">@Html.Raw(@Model.Description)</p>
-        }
-
-
-        @if (Model.HasArrow == true)
-        {
-            <svg class="nhsuk-icon nhsuk-icon--chevron-right-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
-                <path d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm-.3 5.8a1 1 0 1 0-1.5 1.4l2.9 2.8-2.9 2.8a1 1 0 0 0 1.5 1.4l3.5-3.5c.4-.4.4-1 0-1.4Z"></path>
-            </svg>
-        }
-    </div>
+    }
 </div>
